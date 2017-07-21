@@ -31,9 +31,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "standard",
-      "standard-react"
-    ]
+    "extends": ["standard", "standard-react"],
+    "env": {
+      "jest": true
+    }
   }
 }
