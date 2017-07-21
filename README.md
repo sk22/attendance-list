@@ -55,7 +55,7 @@ Changes are saved to view state, applied to database when saved
 ```
 attendance-list
 ├─ people
-|  └─ 1
+|  ├─ 1
 |  |  ├─ name: "John Doe"
 |  |  └─ email: "john.doe@example.com"
 |  └─ 2
