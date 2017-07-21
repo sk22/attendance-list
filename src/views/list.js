@@ -7,8 +7,9 @@ import {
   person as personPropType,
   status as statusPropType
 } from '../prop-types'
+import { setStatus } from '../actions'
 
-const List = ({ list, attendance }) =>
+const List = ({ list, attendance, onStatusChange }) =>
   <div>
     <h1>
       {list.name}
@@ -18,6 +19,11 @@ const List = ({ list, attendance }) =>
       {attendance.map(attendance =>
         <li key={attendance.id}>
           {attendance.person ? attendance.person.name : 'Deleted'}
+          <select onChange={onStatusChange(attendance.id)}>
+            <option label='yes' value='yes' />
+            <option label='no' value='no' />
+            <option label='maybe' value='maybe' />
+          </select>
         </li>
       )}
     </ul>
@@ -25,22 +31,33 @@ const List = ({ list, attendance }) =>
 
 List.propTypes = {
   list: listPropType,
-  attendance: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    person: personPropType,
-    status: statusPropType
-  })
+  attendance: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.any.isRequired,
+      person: personPropType,
+      status: statusPropType
+    })
+  ),
+  onStatusChange: PropTypes.func.isRequired
 }
 
 const attendanceAggregator = (list, people) =>
   list.people.map(id => ({
     id,
     person: people[id],
-    status: list.attendance[id] || null
+    status: list.status[id] || null
   }))
 
 const mapStateToProps = ({ lists, people }, { match }) => ({
   list: lists[match.params.id],
   attendance: attendanceAggregator(lists[match.params.id], people)
 })
-export default withRouter(connect(mapStateToProps)(List))
+
+const mapDispatchToProps = (dispatch, { match }) => ({
+  onStatusChange: person => event =>
+    dispatch(
+      setStatus({ person, status: event.target.value, id: match.params.id })
+    )
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(List))
