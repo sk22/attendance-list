@@ -1,6 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+
+import { list } from '../prop-types'
 
 const Lists = ({ lists }) =>
   <div>
@@ -13,6 +16,10 @@ const Lists = ({ lists }) =>
       )}
     </ul>
   </div>
+
+Lists.propTypes = {
+  lists: PropTypes.objectOf(list)
+}
 
 const mapStateToProps = ({ lists }) => ({ lists })
 
