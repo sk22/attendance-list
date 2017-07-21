@@ -5,7 +5,7 @@ const initialState = {
   xxx: {
     name: 'Club Meeting',
     people: ['aaa', 'bbb'],
-    status: { aaa: true, bbb: 'maybe' }
+    status: { aaa: 'yes', bbb: 'maybe' }
   }
 }
 
@@ -15,8 +15,8 @@ test('set status', () => {
     setStatus({
       id: 'xxx',
       person: 'bbb',
-      status: true
+      status: 'yes'
     })
   )
-  expect(state.xxx.status.bbb).toBe(true)
+  expect(state.xxx.status.bbb).toBe('yes')
 })
