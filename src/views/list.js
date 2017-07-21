@@ -19,7 +19,10 @@ const List = ({ list, attendance, onStatusChange }) =>
       {attendance.map(attendance =>
         <li key={attendance.id}>
           {attendance.person ? attendance.person.name : 'Deleted'}
-          <select onChange={onStatusChange(attendance.id)}>
+          <select
+            onChange={onStatusChange(attendance.id)}
+            value={attendance.status}
+          >
             <option label='yes' value='yes' />
             <option label='no' value='no' />
             <option label='maybe' value='maybe' />
