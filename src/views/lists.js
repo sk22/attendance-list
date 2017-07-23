@@ -2,16 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { generate } from 'shortid'
 
 import { list } from '../prop-types'
+import { setList } from '../actions'
 
-const Lists = ({ lists }) =>
+const Lists = ({ lists, onAdd }) =>
   <div>
-    <h1>List of Attandance Lists</h1>
+    <h1>Attandance Lists</h1>
+    <button onClick={onAdd} type='button'>
+      Add
+    </button>
     <ul>
       {Object.keys(lists).map(id =>
         <li key={id}>
-          {lists[id].name} <Link to={`/${id}`}>Edit</Link>
+          <Link to={`/${id}`}>
+            {lists[id].name}
+          </Link>
         </li>
       )}
     </ul>
@@ -23,4 +30,6 @@ Lists.propTypes = {
 
 const mapStateToProps = ({ lists }) => ({ lists })
 
-export default connect(mapStateToProps)(Lists)
+export default connect(mapStateToProps, {
+  onAdd: () => setList({ id: generate() })
+})(Lists)

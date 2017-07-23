@@ -14,15 +14,16 @@ class AddPerson extends Component {
 
   onChangeName = event => this.setState({ name: event.target.value })
 
-  render = () => (
+  render = () =>
     <div>
-      <input type="text" name="name" onChange={this.onChangeName} />
+      <input type='text' name='name' onChange={this.onChangeName} />
       <button
-        type="button"
+        type='button'
         onClick={() => this.props.onAdd({ name: this.state.name })}
-      >Add</button>
+      >
+        Add
+      </button>
     </div>
-  )
 }
 
 const mapDispatchToProps = dispatch => ({
