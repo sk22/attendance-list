@@ -10,9 +10,18 @@ const initialState = {
   }
 }
 
+const defaultList = {
+  name: 'New List',
+  people: [],
+  status: {}
+}
+
 export default createReducer(
   {
-    [setList]: (state, { id, list = {} }) => ({ ...state, [id]: list }),
+    [setList]: (state, { id, list = defaultList }) => ({
+      ...state,
+      [id]: list
+    }),
     [setStatus]: (state, { person, status, id }) => ({
       ...state,
       [id]: { ...state[id], status: { ...state[id].status, [person]: status } }

@@ -1,5 +1,5 @@
 import lists from './lists'
-import { setStatus } from '../actions'
+import { setStatus, setList } from '../actions'
 
 const initialState = {
   xxx: {
@@ -19,4 +19,13 @@ test('set status', () => {
     })
   )
   expect(state.xxx.status.bbb).toBe('yes')
+})
+
+test('set list', () => {
+  const state = lists(
+    initialState,
+    setList({ id: 'xxx', list: { ...initialState.xxx, name: 'Meetup' } })
+  )
+  expect(state.xxx.name).toBe('Meetup')
+  expect(state.xxx.people.length).toBe(2)
 })
