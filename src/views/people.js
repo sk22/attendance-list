@@ -1,17 +1,24 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import PeopleList from '../views/people-list'
-import AddPerson from '../views/add-person'
-import Person from '../views/person'
+import { person as personPropType } from '../prop-types'
 
-const People = () => (
-  <Switch>
-    <Route exact path="/people" component={PeopleList} />
-    <Route path="/people/add" component={AddPerson} />
-    <Route path="/people/new" component={AddPerson} />
-    <Route path="/people/:id" component={Person} />
-  </Switch>
-)
+const People = ({ people }) =>
+  <div>
+    List of People
+    <Link to={'/people/add'}>Add</Link>
+    <ul>
+      {Object.keys(people).map(id =>
+        <li key={id}>
+          {people[id].name} <Link to={`/people/${id}`}>Edit</Link>
+        </li>
+      )}
+    </ul>
+  </div>
 
-export default People
+People.propTypes = { people: PropTypes.objectOf(personPropType).isRequired }
+
+const mapStateToProps = ({ people }) => ({ people })
+export default connect(mapStateToProps)(People)
