@@ -1,46 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import {
   list as listPropType,
-  person as personPropType,
-  status as statusPropType
+  attendance as attendancePropType
 } from '../prop-types'
 import { setStatus } from '../actions'
+import Attendances from '../components/attendances'
 
-const List = ({ list, attendance, onStatusChange }) =>
+const List = ({ list, attendances, match, onStatusChange }) =>
   <div>
     <h1>
       {list.name}
     </h1>
-    <h2>People</h2>
-    <ul>
-      {attendance.map(attendance =>
-        <li key={attendance.id}>
-          {attendance.person ? attendance.person.name : 'Deleted'}
-          <select
-            onChange={onStatusChange(attendance.id)}
-            value={attendance.status}
-          >
-            <option label='yes' value='yes' />
-            <option label='no' value='no' />
-            <option label='maybe' value='maybe' />
-          </select>
-        </li>
-      )}
-    </ul>
+    <Link to={`${match.url}/edit`}>Edit</Link>
+    <Attendances attendances={attendances} onStatusChange={onStatusChange} />
   </div>
 
 List.propTypes = {
-  list: listPropType,
-  attendance: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.any.isRequired,
-      person: personPropType,
-      status: statusPropType
-    })
-  ),
+  list: listPropType.isRequired,
+  attendances: attendancePropType.isRequired,
+  match: PropTypes.shape({ url: PropTypes.string.isRequired }),
   onStatusChange: PropTypes.func.isRequired
 }
 
@@ -53,7 +34,7 @@ const attendanceAggregator = (list, people) =>
 
 const mapStateToProps = ({ lists, people }, { match }) => ({
   list: lists[match.params.id],
-  attendance: attendanceAggregator(lists[match.params.id], people)
+  attendances: attendanceAggregator(lists[match.params.id], people)
 })
 
 const mapDispatchToProps = (dispatch, { match }) => ({
