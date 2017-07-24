@@ -3,7 +3,16 @@ import PropTypes from 'prop-types'
 import { person as personPropType } from '../prop-types'
 
 class PeopleChooser extends Component {
-  onChoose = id => event => this.setState({ id: event.target.checked })
+  onChoose = id => event => this.setState({ [id]: event.target.checked })
+  getTrue (state) {
+    return Object.keys(state).filter(key => Boolean(state[key]))
+  }
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    people: PropTypes.objectOf(personPropType).isRequired
+  }
+
   render () {
     return (
       <div>
@@ -15,18 +24,15 @@ class PeopleChooser extends Component {
             </li>
           )}
         </ul>
-        {/* TODO: filter; only true values */}
-        <button type='button' onClick={() => this.props.onSubmit(this.state)}>
+        <button
+          type='button'
+          onClick={() => this.props.onSubmit(this.getTrue(this.state))}
+        >
           Add
         </button>
       </div>
     )
   }
-}
-
-PeopleChooser.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  people: PropTypes.objectOf(personPropType).isRequired
 }
 
 export default PeopleChooser
