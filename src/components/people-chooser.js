@@ -3,14 +3,15 @@ import PropTypes from 'prop-types'
 import { person as personPropType } from '../prop-types'
 
 class PeopleChooser extends Component {
-  onChoose = id => event => this.setState({ [id]: event.target.checked })
-  static getTrue = state =>
-    Object.keys(state).filter(key => Boolean(state[key]))
-
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     people: PropTypes.objectOf(personPropType).isRequired
   }
+
+  onChoose = id => event => this.setState({ [id]: event.target.checked })
+
+  static getTrue = state =>
+    Object.keys(state).filter(key => Boolean(state[key]))
 
   render = () =>
     <div>
