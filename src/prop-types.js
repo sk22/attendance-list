@@ -4,7 +4,7 @@ export const person = PropTypes.shape({ name: PropTypes.string.isRequired })
 export const status = PropTypes.oneOf(['yes', 'no', 'maybe'])
 export const list = PropTypes.shape({
   name: PropTypes.string.isRequired,
-  people: PropTypes.arrayOf(PropTypes.any).isRequired,
+  people: PropTypes.arrayOf(PropTypes.string).isRequired,
   status: PropTypes.objectOf(status)
 })
 export const attendance = PropTypes.arrayOf(

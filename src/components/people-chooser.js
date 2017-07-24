@@ -4,31 +4,29 @@ import { person as personPropType } from '../prop-types'
 
 class PeopleChooser extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    people: PropTypes.objectOf(personPropType).isRequired
+    ticked: PropTypes.objectOf(PropTypes.bool),
+    people: PropTypes.objectOf(personPropType).isRequired,
+    onChange: PropTypes.func.isRequired
   }
+  static defaultProps = { ticked: {} }
 
-  onChoose = id => event => this.setState({ [id]: event.target.checked })
-
-  static getTrue = state =>
-    Object.keys(state).filter(key => Boolean(state[key]))
+  onChange = person => event =>
+    this.props.onChange({ person, inList: event.target.checked })
 
   render = () =>
     <div>
       <ul>
         {Object.keys(this.props.people).map(id =>
-          <li>
+          <li key={id}>
             {this.props.people[id].name}{' '}
-            <input type='checkbox' onChange={this.onChoose(id)} />
+            <input
+              type='checkbox'
+              onChange={this.onChange(id)}
+              checked={this.props.ticked[id] || false}
+            />
           </li>
         )}
       </ul>
-      <button
-        type='button'
-        onClick={() => this.props.onSubmit(this.getTrue(this.state))}
-      >
-        Add
-      </button>
     </div>
 }
 

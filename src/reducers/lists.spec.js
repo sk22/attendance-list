@@ -1,5 +1,5 @@
 import lists from './lists'
-import { setStatus, setList, addPeopleToList } from '../actions'
+import { setStatus, setList, setPeople, setPersonInList } from '../actions'
 
 const initialState = {
   xxx: {
@@ -30,10 +30,18 @@ test('set list', () => {
   expect(state.xxx.people.length).toBe(2)
 })
 
-test('add people to list', () => {
+test('removes a person', () => {
   const state = lists(
     initialState,
-    addPeopleToList({ id: 'xxx', people: ['bbb', 'ccc'] })
+    setPersonInList({ id: 'xxx', person: 'bbb', inList: false })
   )
-  expect(state.xxx.people.length).toBe(3)
+  expect(state.xxx.people).toEqual(['aaa'])
+})
+
+test('adds a person', () => {
+  const state = lists(
+    initialState,
+    setPersonInList({ id: 'xxx', person: 'ccc', inList: true })
+  )
+  expect(state.xxx.people).toEqual(['aaa', 'bbb', 'ccc'])
 })
