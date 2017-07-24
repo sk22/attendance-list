@@ -25,7 +25,8 @@ const Lists = ({ lists, onAdd }) =>
   </div>
 
 Lists.propTypes = {
-  lists: PropTypes.objectOf(list)
+  lists: PropTypes.objectOf(list),
+  onAdd: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ lists }) => ({ lists })
