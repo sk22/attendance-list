@@ -1,6 +1,6 @@
 import PeopleChooser from './people-chooser'
 
-const getTrue = PeopleChooser.prototype.getTrue
+const getTrue = PeopleChooser.getTrue
 
 test('getTrue returns true values', () => {
   const state = {
