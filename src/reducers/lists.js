@@ -1,6 +1,6 @@
 import { createReducer } from 'redux-act'
 
-import { setList, setStatus } from '../actions'
+import { setList, setStatus, addPeopleToList } from '../actions'
 
 const initialState = {
   xxx: {
@@ -25,6 +25,13 @@ export default createReducer(
     [setStatus]: (state, { person, status, id }) => ({
       ...state,
       [id]: { ...state[id], status: { ...state[id].status, [person]: status } }
+    }),
+    [addPeopleToList]: (state, { id, people }) => ({
+      ...state,
+      [id]: {
+        ...state[id],
+        people: [...new Set([...state[id].people, ...people])]
+      }
     })
   },
   initialState
